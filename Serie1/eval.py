@@ -22,7 +22,7 @@ int_analytic_exp = np.exp(b) - np.exp(a)
 # %% Integrationsfehler in Abhängingkeit von der Schrittweite der Teilintervalle
 
 # logarithmisch äquidistanter Vektor der Schrittweiten
-h = np.logspace(-4, -1, num=1000)
+h = np.logspace(-4, -1, num=100)
 
 
 # Definition der Funktionen (vgl. MatLab function handles)
@@ -61,10 +61,16 @@ plt.show()
 
 # rechte Intervallgrenze fest
 # linke Intervallgrenze mit verschiedenen Werten
-for i in range(9):
+stamm_quad_werte = np.array([])
+for i in range(1,5):
 
-    area, xwerte, stammfunktion = intrect(quad, a+i, b, 0.01)
+    area, xwerte, stammfunktion = intrect(quad, a+2*i, b, 0.01)
+    if  stamm_quad_werte.size == 0:
+        stamm_quad_werte = xwerte
     plt.plot(xwerte, stammfunktion, label="a = {}".format(a+i))
-plt.plot(xwerte, stamm_quad(xwerte), label="1/3 x^3")
+plt.plot(stamm_quad_werte, stamm_quad(stamm_quad_werte), label="1/3 x^3")
+axes = plt.gca()
+#axes.set_xlim([xmin,xmax])
+axes.set_ylim([-50,250])
 plt.legend()
 plt.show()
