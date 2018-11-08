@@ -39,9 +39,9 @@ def intrect(fhandle, a, b, h):
     mittelpunkte = np.linspace(a + h*0.5, b - h*0.5, (b-a)/h)
     # Funktionswerte an den Intervallmittelpunkten
     fwerte = fhandle(mittelpunkte)
-    stammfunktion = np.cumsum(fwerte)
+    stammfunktion = np.cumsum(fwerte)*h
     # Letzter Eintrag von cumsum entspricht der gesamt summe
-    area = stammfunktion[-1]*h
+    area = stammfunktion[-1]
     # Berechnung der xwerte für Darstellung der Stammfunktion, jeweils am
     # rechten Rand des Teilintervalls
     xwerte = mittelpunkte + h*0.5
@@ -55,3 +55,5 @@ def intrect_only_area(fhandle, a, b, h):
     fwerte = fhandle(mittelpunkte)
     area = np.sum(fwerte)*h
     return area
+
+#print(intrect_only_area(np.sin, 0, np.pi, 0.001))

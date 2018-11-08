@@ -60,5 +60,11 @@ plt.show()
 # am Bsp. der Stammfunktion F von x^2
 
 # rechte Intervallgrenze fest
-
 # linke Intervallgrenze mit verschiedenen Werten
+for i in range(9):
+
+    area, xwerte, stammfunktion = intrect(quad, a+i, b, 0.01)
+    plt.plot(xwerte, stammfunktion, label="a = {}".format(a+i))
+plt.plot(xwerte, stamm_quad(xwerte), label="1/3 x^3")
+plt.legend()
+plt.show()
