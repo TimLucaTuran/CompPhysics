@@ -36,22 +36,22 @@ def intrect(fhandle, a, b, h):
 
 
     # Mittelpunkte der Intervalle ermitteln
-    mittelpunkte = np.linspace(a+h/2, b-h/2, (b-a)/h)
+    mittelpunkte = np.linspace(a + h*0.5, b - h*0.5, (b-a)/h)
     # Funktionswerte an den Intervallmittelpunkten
-    fwerte = np.array([fhandle(x) for x in mittelpunkte])
-    # Aufsummierung von Teilintervallen
-    N = mittelpunkte.size
-    area = 0
-    stamm_funk = np.zeros(N)
-    xwerte = np.zeros(N)
-    for i in range(N):
-        area += h*fwerte[i]
-        stamm_funk[i] = area
-        xwerte[i] = mittelpunkte[i] - h/2
-    # Berechnung der Fläche
-
+    fwerte = fhandle(mittelpunkte)
+    stammfunktion = np.cumsum(fwerte)
+    # Letzter Eintrag von cumsum entspricht der gesamt summe
+    area = stammfunktion[-1]*h
     # Berechnung der xwerte für Darstellung der Stammfunktion, jeweils am
     # rechten Rand des Teilintervalls
+    xwerte = mittelpunkte + h*0.5
 
 
-    return area, xwerte, stamm_funk
+    return area, xwerte, stammfunktion
+
+#Version von intrect wenn nur die area benötigt wird
+def intrect_only_area(fhandle, a, b, h):
+    mittelpunkte = np.linspace(a + h*0.5, b - h*0.5, (b-a)/h)
+    fwerte = fhandle(mittelpunkte)
+    area = np.sum(fwerte)*h
+    return area

@@ -9,45 +9,53 @@ analytischen Ergebnis verglichen.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from module_intrect import intrect
+from module_intrect import intrect, intrect_only_area
 
 # Berechnung der exakten Flächeninhalte
-int_analytic_lin = np.poly1d([1/2, 0])
-int_analytic_quad = np.poly1d([1/3, 0, 0])
-int_analytic_exp = np.exp
+a, b = 0, 10
+stamm_lin = np.poly1d([1/2, 0, 0])
+int_analytic_lin = stamm_lin(b) - stamm_lin(a)
+stamm_quad = np.poly1d([1/3, 0, 0, 0])
+int_analytic_quad = stamm_quad(b) - stamm_quad(a)
+int_analytic_exp = np.exp(b) - np.exp(a)
 
 # %% Integrationsfehler in Abhängingkeit von der Schrittweite der Teilintervalle
 
 # logarithmisch äquidistanter Vektor der Schrittweiten
-h = np.logspace(-4, -1)
+h = np.logspace(-4, -1, num=1000)
 
 
 # Definition der Funktionen (vgl. MatLab function handles)
-lin = np.poly1d([1])
-quad = np.poly1d([1, 0])
+lin = np.poly1d([1,0])
+quad = np.poly1d([1, 0, 0])
 exp = np.exp
-a, b = 0, 10
 error_lin = np.zeros(h.size)
 error_quad = np.zeros(h.size)
 error_exp = np.zeros(h.size)
 # Schleife über alle h zur Berechnung von Integral und dessen Fehler
 for i in range(h.size):
     # f(x) = x
-    area, xwerte, stamm_funk = intrect(lin, a, b, h[i])
-    error_lin[i] = abs((int_analytic_lin(b) - int_analytic_lin(a)) - area )
+    area = intrect_only_area(lin, a, b, h[i])
+    error_lin[i] = abs(int_analytic_lin - area )
 
     # f(x) = x^2
-    area, xwerte, stamm_funk = intrect(quad, a, b, h[i])
-    error_quad[i] = abs(int_analytic_quad(b) - area )
+    area= intrect_only_area(quad, a, b, h[i])
+    error_quad[i] = abs(int_analytic_quad - area )
 
     # f(x) = exp(x)
-    area, xwerte, stamm_funk = intrect(exp, a, b, h[i])
-    error_exp[i] = abs(int_analytic_exp(b) - area )
+    area = intrect_only_area(exp, a, b, h[i])
+    error_exp[i] = abs(int_analytic_exp - area )
+
+    print("Calculating point nr: ", i)
 
 # logarithmischer Plot Fehler vs. Schrittweite h
 #plt.plot(h, error_lin)
 #plt.show()
-print(error_lin)
+plt.loglog(h , error_lin, label="lin")
+plt.loglog(h , error_quad, label="quad")
+plt.loglog(h , error_exp, label="exp")
+plt.legend()
+plt.show()
 # %% Abhaengigkeit der Integrationskonstante vom linken Intervallrand
 # am Bsp. der Stammfunktion F von x^2
 
