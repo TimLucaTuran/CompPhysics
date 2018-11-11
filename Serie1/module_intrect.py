@@ -55,5 +55,3 @@ def intrect_only_area(fhandle, a, b, h):
     fwerte = fhandle(mittelpunkte)
     area = np.sum(fwerte)*h
     return area
-
-#print(intrect_only_area(np.sin, 0, np.pi, 0.001))

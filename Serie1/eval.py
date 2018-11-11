@@ -22,7 +22,7 @@ int_analytic_exp = np.exp(b) - np.exp(a)
 # %% Integrationsfehler in Abhängingkeit von der Schrittweite der Teilintervalle
 
 # logarithmisch äquidistanter Vektor der Schrittweiten
-h = np.logspace(-4, -1, num=100)
+h = np.logspace(-4, -1, num=1000)
 
 
 # Definition der Funktionen (vgl. MatLab function handles)
@@ -54,6 +54,9 @@ for i in range(h.size):
 plt.loglog(h , error_lin, label="lin")
 plt.loglog(h , error_quad, label="quad")
 plt.loglog(h , error_exp, label="exp")
+plt.loglog(h, h, label="f(h)=h")
+plt.xlabel("Stepsize h")
+plt.ylabel("Error")
 plt.legend()
 plt.show()
 # %% Abhaengigkeit der Integrationskonstante vom linken Intervallrand
@@ -67,7 +70,7 @@ for i in range(1,5):
     area, xwerte, stammfunktion = intrect(quad, a+2*i, b, 0.01)
     if  stamm_quad_werte.size == 0:
         stamm_quad_werte = xwerte
-    plt.plot(xwerte, stammfunktion, label="a = {}".format(a+i))
+    plt.plot(xwerte, stammfunktion, linestyle=":", label="a = {}".format(a+2*i))
 plt.plot(stamm_quad_werte, stamm_quad(stamm_quad_werte), label="1/3 x^3")
 axes = plt.gca()
 #axes.set_xlim([xmin,xmax])
