@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-def himmelblau(x,y):
+def himmelblau(xy):
     """ Berechnung der zweidimensionalen Himmelblau-Funktion.
 
         Argumente
@@ -24,6 +24,8 @@ def himmelblau(x,y):
               [3.58442834033049174, -1.84812652696440355]
          ];
     """
+    x = xy[0]
+    y = xy[1]
     fvalues = (x ** 2 + y - 11) ** 2 + (x + y ** 2 - 7) ** 2
 
     return fvalues
