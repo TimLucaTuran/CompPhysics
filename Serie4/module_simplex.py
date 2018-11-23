@@ -98,7 +98,7 @@ def simplex(fhandle, x_start, N_max, p):
         b = np.linalg.norm(simplex_list[1][0:2] - simplex_list[2][0:2])
         c = np.linalg.norm(simplex_list[2][0:2] - simplex_list[0][0:2])
         s = 0.5*(a+b+c)
-        simplex_size = 0.25 * np.sqrt(s*(s-a)*(s-b)*(s-c))
+        simplex_size = 0.25 * np.sqrt(s*(s-a)*(s-b)*(s-c)) #Formel von Heron
         #Abruchbedingungen überprüfen
         if variance < p**2 and simplex_size < 0.01*lambda_:
             break
@@ -120,6 +120,6 @@ lambda_ = 0.1  # empfohlene Größe des Startsimplex
 fhandle = himmelblau
 x_start = [2,4]
 N_max   = 1e3
-p       = 1e-22
+p       = 1e-30
 x_min, f_min, N = simplex(fhandle, x_start, N_max, p)
 print(f_min, x_min)
