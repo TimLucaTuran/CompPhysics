@@ -94,9 +94,9 @@ def simplex(fhandle, x_start, N_max, p):
         #Varianz berechnen:
         variance = np.var(simplex_list, axis=0)[2]
         #Größe des Simplex berechnen:
-        a = np.linalg.norm(simplex_list[0][0:2] - simplex_list[0][0:2])
-        b = np.linalg.norm(simplex_list[0][0:2] - simplex_list[0][0:2])
-        c = np.linalg.norm(simplex_list[0][0:2] - simplex_list[0][0:2])
+        a = np.linalg.norm(simplex_list[0][0:2] - simplex_list[1][0:2])
+        b = np.linalg.norm(simplex_list[1][0:2] - simplex_list[2][0:2])
+        c = np.linalg.norm(simplex_list[2][0:2] - simplex_list[0][0:2])
         s = 0.5*(a+b+c)
         simplex_size = 0.25 * np.sqrt(s*(s-a)*(s-b)*(s-c))
         #Abruchbedingungen überprüfen
