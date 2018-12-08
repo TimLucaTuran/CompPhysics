@@ -64,19 +64,19 @@ def myLU(A):
         Untere Dreiecksmatrix
     '''
     n = A.shape[0]
-    L = np.identity(n)
+    L = np.identity(n, dtype=float)
     U = np.copy(A)
     for k in range(n):
         for i in range(k+1, n):
             L[i][k] = U[i][k]/U[k][k]
             U[i][k] = 0
-            for j in range(k+1,n):
-                U[i][j] = U[i][j] - L[i][k]*U[k][j]
+            U[i][k+1:] -= L[i][k]*U[k][k+1:]
     return L, U
 
-A = np.array([[1,1,0],[4,0,2],[0,2,1]])
+A = np.array([[1,1,0],[4,0,2],[0,2,1]], dtype=float)
 L, U = myLU(A)
 b = np.array([2,6,1])
 x = elimination(L,U,b)
 print("sol: ",x)
+print("LU check: ", L @ U )
 print("sol check: ", A @ x, "=", b )
