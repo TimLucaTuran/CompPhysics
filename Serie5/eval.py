@@ -20,10 +20,10 @@ from timeit import default_timer as timer
 # Konsolenausgabe
 
 #%% Beispiel 2: Laufzeit der LU-Zerlegung in Abhängigkeit von der Matrixgröße
-max_matrix_size = 100
+max_matrix_size = 150
 repititions = 15
 time_data_average = np.zeros(max_matrix_size)
-for i in range(1, max_matrix_size):
+for i in range(1, max_matrix_size+1):
     #Initialise rand matrix
     print("Matrix size: ", i)
     time_data = np.zeros(repititions)
@@ -34,7 +34,7 @@ for i in range(1, max_matrix_size):
         L, U = myLU(A)
         end = timer()
         time_data[j] = end - start
-    time_data_average[i] = np.average(time_data)
+    time_data_average[i-1] = np.average(time_data)
 print("time max matrix: ", time_data_average[-1])
 max_matrix_size_list = np.arange(1, max_matrix_size+1)
 plt.loglog(max_matrix_size_list, time_data_average, label="Data")
