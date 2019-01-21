@@ -72,11 +72,3 @@ def myLU(A):
             U[i][k] = 0
             U[i][k+1:] -= L[i][k]*U[k][k+1:]
     return L, U
-
-A = np.array([[1,1,0],[4,0,2],[0,2,1]], dtype=float)
-L, U = myLU(A)
-b = np.array([2,6,1])
-x = elimination(L,U,b)
-print("sol: ",x)
-print("LU check: ", L @ U )
-print("sol check: ", A @ x, "=", b )

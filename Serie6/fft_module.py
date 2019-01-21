@@ -15,3 +15,5 @@ def my_fft(N, signal):
         spektrum[:N//2] = even + scalar_list * odd
         spektrum[N//2:] = even - scalar_list * odd
         return spektrum
+signal = np.random.rand(256)
+np.allclose(my_fft(256, signal), np.fft.fft(signal))

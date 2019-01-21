@@ -54,9 +54,8 @@ def simplex(fhandle, x_start, N_max, p):
     loopcount = 0
 
     #Start des Loops
-    while loopcount <= N_max:
+    while loopcount < N_max:
         loopcount += 1
-        print("loopcount: ", loopcount)
         #simpex_list sortieren
         simplex_list.view('i8,i8,i8').sort(order=['f2'], axis=0)
         #Berechne den potentiellen nächsten Punkt
@@ -99,6 +98,7 @@ def simplex(fhandle, x_start, N_max, p):
         c = np.linalg.norm(simplex_list[2][0:2] - simplex_list[0][0:2])
         s = 0.5*(a+b+c)
         simplex_size = 0.25 * np.sqrt(s*(s-a)*(s-b)*(s-c)) #Formel von Heron
+
         #Abruchbedingungen überprüfen
         if variance < p**2 and simplex_size < 0.01*lambda_:
             break
@@ -118,8 +118,6 @@ gamma_  = 2.0  # empfohlener Faktor für die Expansion
 lambda_ = 0.1  # empfohlene Größe des Startsimplex
 
 fhandle = himmelblau
-x_start = [2,4]
+x_start = [5,5]
 N_max   = 1e3
-p       = 1e-30
-x_min, f_min, N = simplex(fhandle, x_start, N_max, p)
-print(f_min, x_min)
+p       = 0
